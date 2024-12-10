@@ -1,20 +1,20 @@
 ---
-title: "Clients"
-description: "A list of applications that support MCP integrations"
+title: "MCP 客户端"
+description: "支持 MCP 的应用列表"
 ---
 
-This page provides an overview of applications that support the Model Context Protocol (MCP). Each client may support different MCP features, allowing for varying levels of integration with MCP servers.
+此页面概述了支持 Model Context Protocol (MCP) 的应用程序。每个客户端可能支持不同的 MCP 功能子集，从而允许与 MCP 服务器的不同级别的集成。
 
-## Feature support matrix
+## 功能支持表格
 
-| Client                    | [Resources] | [Prompts] | [Tools] | [Sampling] | Roots | Notes                                             |
+| 客户端                    | [Resources] | [Prompts] | [Tools] | [Sampling] | Roots | 备注                                             |
 |---------------------------|-------------|-----------|---------|------------|-------|---------------------------------------------------|
-| [Claude Desktop App][Claude] | ✅         | ✅         | ✅       | ❌          | ❌     | Full support for all MCP features            |
-| [Zed][Zed]                | ❌         | ✅         | ❌       | ❌          | ❌     | Prompts appear as slash commands                  |
-| [Sourcegraph Cody][Cody]  | ✅         | ❌         | ❌       | ❌          | ❌     | Supports resources through OpenCTX                |
-| [Firebase Genkit][Genkit] | ⚠️         | ✅         | ✅       | ❌          | ❌     | Supports resource list and lookup through tools.  |
-| [Continue][Continue]      | ✅         | ✅         | ✅       | ❌          | ❌     | Full support for all MCP features                 |
-| [GenAIScript][GenAIScript]  | ❌         | ❌         | ✅       | ❌          | ❌     | Supports tools. |
+| [Claude Desktop App][Claude] | ✅         | ✅         | ✅       | ❌          | ❌     | 完全支持            |
+| [Zed][Zed]                | ❌         | ✅         | ❌       | ❌          | ❌     | 提示以 / 命令的形式出现                  |
+| [Sourcegraph Cody][Cody]  | ✅         | ❌         | ❌       | ❌          | ❌     | 通过 OpenCTX 支持 resources                |
+| [Firebase Genkit][Genkit] | ⚠️         | ✅         | ✅       | ❌          | ❌     | 通过 tools 支持列出和查找 resources  |
+| [Continue][Continue]      | ✅         | ✅         | ✅       | ❌          | ❌     | 完全支持                 |
+| [GenAIScript][GenAIScript]  | ❌         | ❌         | ✅       | ❌          | ❌     | 支持 tools |
 
 [Claude]: https://claude.ai/download
 [Zed]: https://zed.dev
@@ -28,75 +28,75 @@ This page provides an overview of applications that support the Model Context Pr
 [Tools]: https://modelcontextprotocol.io/docs/concepts/tools
 [Sampling]: https://modelcontextprotocol.io/docs/concepts/sampling
 
-## Client details
+## 客户端详情
 
-### Claude Desktop App
-The Claude desktop application provides comprehensive support for MCP, enabling deep integration with local tools and data sources.
+### Claude Desktop 应用
+Claude Desktop 为 MCP 提供全面支持，实现与本地工具和数据源的深度集成。
 
-**Key features:**
-- Full support for resources, allowing attachment of local files and data
-- Support for prompt templates
-- Tool integration for executing commands and scripts
-- Local server connections for enhanced privacy and security
+**主要特性：**
+- 完全支持 resources，允许附加本地文件和数据
+- 支持 prompt 模板
+- Tool 集成以执行命令和脚本
+- 本地 server 连接以增强隐私和安全性
 
-> ⓘ Note: The Claude.ai web application does not currently support MCP. MCP features are only available in the desktop application.
+> ⓘ Claude.ai 网页版暂不支持 MCP。MCP 特性仅在桌面应用中可用。
 
 ### Zed
-[Zed](https://zed.dev/docs/assistant/model-context-protocol) is a high-performance code editor with built-in MCP support, focusing on prompt templates and tool integration.
+[Zed](https://zed.dev/docs/assistant/model-context-protocol) 是一个高性能代码编辑器，内置 MCP 支持，专注于 prompt 模板和 tool 集成。
 
-**Key features:**
-- Prompt templates surface as slash commands in the editor
-- Tool integration for enhanced coding workflows
-- Tight integration with editor features and workspace context
-- Does not support MCP resources
+**主要特性：**
+- 提示模板在编辑器中以  / 命令的形式出现
+- Tool 集成以增强编码工作流
+- 与编辑器功能和工作区上下文的紧密集成
+- 不支持 MCP resources
 
 ### Sourcegraph Cody
-[Cody](https://openctx.org/docs/providers/modelcontextprotocol) is Sourcegraph's AI coding assistant, which implements MCP through OpenCTX.
+[Cody](https://openctx.org/docs/providers/modelcontextprotocol) 是 Sourcegraph 的 AI 编码助手，通过 OpenCTX 实现 MCP。
 
-**Key features:**
-- Support for MCP resources
-- Integration with Sourcegraph's code intelligence
-- Uses OpenCTX as an abstraction layer
-- Future support planned for additional MCP features
+**主要特性：**
+- 支持 MCP resources
+- 与 Sourcegraph 的 code intelligence 集成
+- 使用 OpenCTX 作为抽象层
+- 计划在未来支持更多 MCP 特性
 
 ### Firebase Genkit
-[Genkit](https://github.com/firebase/genkit) is Firebase's SDK for building and integrating GenAI features into applications. The [genkitx-mcp](https://github.com/firebase/genkit/tree/main/js/plugins/mcp) plugin enables consuming MCP servers as a client or creating MCP servers from Genkit tools and prompts.
+[Genkit](https://github.com/firebase/genkit) 是 Firebase 的 SDK，用于在应用中构建和集成 GenAI 功能。[genkitx-mcp](https://github.com/firebase/genkit/tree/main/js/plugins/mcp) 插件使得可以将 MCP 服务器作为 client 使用，或从 Genkit tools 和 prompts 创建 MCP server。
 
-**Key features:**
-- Client support for tools and prompts (resources partially supported)
-- Rich discovery with support in Genkit's Dev UI playground
-- Seamless interoperability with Genkit's existing tools and prompts
-- Works across a wide variety of GenAI models from top providers
+**主要特性：**
+- 客户端支持 tools 和 prompts（部分支持 resources）
+- Rich discovery with support in Genkit’s Dev UI playground
+- 与 Genkit 的现有 tools 和 prompts 无缝互操作
+- 适用于来自顶级提供商的各种 GenAI 模型
 
 ### Continue
-[Continue](https://github.com/continuedev/continue) is an open-source AI code assistant, with built-in support for all MCP features.
+[Continue](https://github.com/continuedev/continue) 是一个开源 AI 代码助手，支持所有 MCP 功能。
 
-**Key features**
-- Type "@" to mention MCP resources
-- Prompt templates surface as slash commands
-- Use both built-in and MCP tools directly in chat
-- Supports VS Code and JetBrains IDEs, with any LLM
+**主要特性**
+- 输入 "@" 调用 MCP resources
+- Prompt 模板以 / 命令的形式调用
+- 在聊天中直接使用内置工具和 MCP 工具
+- 支持 VS Code 和 JetBrains IDE，与任何 LLM 一起使用
 
 ### GenAIScript
-Programmatically assemble prompts for LLMs using [GenAIScript](https://microsoft.github.io/genaiscript/) (in JavaScript). Orchestrate LLMs, tools, and data in JavaScript.
+使用 [GenAIScript](https://microsoft.github.io/genaiscript/)（在 JavaScript 中）以编程方式为 LLM 组装 prompts。在 JavaScript 中编排 LLM、tools 和 resources。
 
-**Key features:**
-- JavaScript toolbox to work with prompts
-- Abstraction to make it easy and productive
-- Seamless Visual Studio Code integration
+**主要特性：**
+- JavaScript 工具箱用于处理提示
+- 便于使用和提高生产力的抽象层
+- 无缝集成 Visual Studio Code
 
-## Adding MCP support to your application
+## 为你的应用添加 MCP 支持
 
-If you've added MCP support to your application, we encourage you to submit a pull request to add it to this list. MCP integration can provide your users with powerful contextual AI capabilities and make your application part of the growing MCP ecosystem.
+如果你已为你的应用程序添加了 MCP 支持，我们鼓励你提交一个 pull request 将其添加到此列表中。MCP 集成可以为你的用户提供强大的上下文 AI 功能，并使你的应用程序成为不断增长的 MCP 生态的一部分。
 
-Benefits of adding MCP support:
-- Enable users to bring their own context and tools
-- Join a growing ecosystem of interoperable AI applications
-- Provide users with flexible integration options
-- Support local-first AI workflows
+支持 MCP 的好处：
+- 使用户能够带入他们自己的上下文和 tools
+- 加入一个不断增长的可互操作 AI 应用程序生态
+- 为用户提供灵活的集成选项
+- 支持 local-first 的 AI 工作流
 
-To get started with implementing MCP in your application, check out our [Python](https://github.com/modelcontextprotocol/python-sdk) or [TypeScript SDK Documentation](https://github.com/modelcontextprotocol/typescript-sdk)
+要开始在你的应用程序中实现 MCP，请查看我们的 [Python](https://github.com/modelcontextprotocol/python-sdk) 或 [TypeScript](https://github.com/modelcontextprotocol/typescript-sdk) SDK 文档。
 
-## Updates and corrections
+## 更新和更正
 
-This list is maintained by the community. If you notice any inaccuracies or would like to update information about MCP support in your application, please submit a pull request or [open an issue in our documentation repository](https://github.com/modelcontextprotocol/docs/issues).
+此列表由社区维护。如果你发现任何不准确之处或希望更新有关应用程序中 MCP 支持的信息，请提交一个 pull request 或 [在我们的文档库中打开一个问题](https://github.com/modelcontextprotocol/docs/issues)。

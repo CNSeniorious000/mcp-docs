@@ -1,28 +1,28 @@
 ---
-title: "Quickstart"
-description: "Get started with MCP in less than 5 minutes"
+title: "快速入门"
+description: "在 5 分钟内开始使用 MCP"
 ---
 
-MCP is a protocol that enables secure connections between host applications, such as [Claude Desktop](https://claude.ai/download), and local services. In this quickstart guide, you'll learn how to:
+MCP 是一个协议，它可以在 host 应用（如 [Claude Desktop](https://claude.ai/download)）和本地服务之间建立安全连接。在本快速入门指南中，你将学习如何：
 
-- Set up a local SQLite database
-- Connect Claude Desktop to it through MCP
-- Query and analyze your data securely
+- 设置本地 SQLite 数据库
+- 通过 MCP 将 Claude Desktop 连接到该数据库
+- 安全地查询和分析你的数据
 
 <Note>
-While this guide focuses on using Claude Desktop as an example MCP host, the protocol is open and can be integrated by any application. IDEs, AI tools, and other software can all use MCP to connect to local integrations in a standardized way.
+虽然本指南侧重于使用 Claude Desktop 作为 MCP 主机示例，但该协议是开放的，可以被任何应用程序集成。IDE、AI 工具和其他软件都可以使用 MCP 以标准化的方式连接到本地集成。
 </Note>
 
 <Warning>
-Claude Desktop's MCP support is currently in developer preview and only supports connecting to local MCP servers running on your machine. Remote MCP connections are not yet supported. This integration is only available in the Claude Desktop app, not the Claude web interface (claude.ai).
+Claude Desktop 的 MCP 支持目前处于开发者预览阶段，仅支持连接到运行在你机器上的本地 MCP 服务器。尚不支持远程 MCP 连接。此集成仅在 Claude Desktop 应用程序中可用，而不适用于 Claude 的网页界面 (claude.ai)。
 </Warning>
 
-## How MCP works
+## MCP 如何工作
 
-MCP (Model Context Protocol) is an open protocol that enables secure, controlled interactions between AI applications and local or remote resources. Let's break down how it works, then look at how we'll use it in this guide.
+MCP (Model Context Protocol) 是一个开放协议，它可以在 AI 应用程序与本地或远程资源之间实现安全、受控的交互。让我们来解析一下它的工作原理，然后看看我们将在本指南中如何使用它。
 
-### General Architecture
-At its core, MCP follows a client-server architecture where a host application can connect to multiple servers:
+### 通用架构
+MCP 的核心是一个 client-server 架构，host 应用程序可以连接到多个服务器：
 
 ```mermaid
 flowchart LR
@@ -45,15 +45,15 @@ flowchart LR
     end
 ```
 
-- **MCP Hosts**: Programs like Claude Desktop, IDEs, or AI tools that want to access resources through MCP
-- **MCP Clients**: Protocol clients that maintain 1:1 connections with servers
-- **MCP Servers**: Lightweight programs that each expose specific capabilities through the standardized Model Context Protocol
-- **Local Resources**: Your computer's resources (databases, files, services) that MCP servers can securely access
-- **Remote Resources**: Resources available over the internet (e.g., through APIs) that MCP servers can connect to
+- **MCP Hosts**: 像 Claude Desktop、IDEs 或 AI 工具这样的程序，它们希望通过 MCP 访问资源
+- **MCP Clients**: 维护与服务器 1:1 连接的协议客户端
+- **MCP Servers**: 轻量级程序，通过标准化的 Model Context Protocol 暴露特定功能
+- **Local Resources**: 你的计算机资源（数据库、文件、服务），MCP 服务器可以安全地访问这些资源
+- **Remote Resources**: 通过互联网可用的资源（例如，通过 APIs），MCP 服务器可以连接到这些资源
 
-### In This Guide
+### 在本指南中
 
-For this quickstart, we'll implement a focused example using SQLite:
+对于本快速入门，我们将使用 SQLite 实现一个集中示例：
 
 ```mermaid
 flowchart LR
@@ -68,39 +68,39 @@ flowchart LR
     end
 ```
 
-1. Claude Desktop acts as our MCP client
-2. A SQLite MCP Server provides secure database access
-3. Your local SQLite database stores the actual data
+1. Claude Desktop 作为我们的 MCP 客户端
+2. 一个 SQLite MCP 服务器提供安全的数据库访问
+3. 你的本地 SQLite 数据库存储实际数据
 
-The communication between the SQLite MCP server and your local SQLite database happens entirely on your machine&mdash;your SQLite database is not exposed to the internet. The Model Context Protocol ensures that Claude Desktop can only perform approved database operations through well-defined interfaces. This gives you a secure way to let Claude analyze and interact with your local data while maintaining complete control over what it can access.
+SQLite MCP 服务器和你的本地 SQLite 数据库之间的通信完全发生在你的机器上 &mdash; 你的 SQLite 数据库不会暴露在互联网上。Model Context Protocol 确保 Claude Desktop 只能通过定义良好的接口执行批准的数据库操作。这为你提供了一种安全的方式，让 Claude 分析和交互你的本地数据，同时完全控制它可以访问的内容。
 
-## Prerequisites
+## 前提条件
 
-- macOS or Windows
-- The latest version of [Claude Desktop](https://claude.ai/download) installed
-- [uv](https://docs.astral.sh/uv/) 0.4.18 or higher (`uv --version` to check)
-- Git (`git --version` to check)
-- SQLite (`sqlite3 --version` to check)
+- macOS 或 Windows
+- 安装最新版本的 [Claude Desktop](https://claude.ai/download)
+- [uv](https://docs.astral.sh/uv/) 0.4.18 或更高版本（`uv --version` 检查）
+- Git（`git --version` 检查）
+- SQLite（`sqlite3 --version` 检查）
 
 <AccordionGroup>
-  <Accordion title="Installing prerequisites (macOS)">
+  <Accordion title="安装前提条件 (macOS)">
   ```bash
-  # Using Homebrew
+  # 使用 Homebrew
   brew install uv git sqlite3
 
-  # Or download directly:
+  # 或直接下载：
   # uv: https://docs.astral.sh/uv/
   # Git: https://git-scm.com
   # SQLite: https://www.sqlite.org/download.html
   ```
   </Accordion>
-  <Accordion title="Installing prerequisites (Windows)">
+  <Accordion title="安装前提条件 (Windows)">
   ```powershell
-  # Using winget
+  # 使用 winget
   winget install --id=astral-sh.uv -e
   winget install git.git sqlite.sqlite
 
-  # Or download directly:
+  # 或直接下载：
   # uv: https://docs.astral.sh/uv/
   # Git: https://git-scm.com
   # SQLite: https://www.sqlite.org/download.html
@@ -108,16 +108,16 @@ The communication between the SQLite MCP server and your local SQLite database h
   </Accordion>
 </AccordionGroup>
 
-## Installation
+## 安装
 
 <Tabs>
   <Tab title="macOS">
     <Steps>
-      <Step title="Create a sample database">
-        Let's create a simple SQLite database for testing:
+      <Step title="创建示例数据库">
+        创建一个简单的 SQLite 数据库进行测试：
 
         ```bash
-        # Create a new SQLite database
+        # 创建一个新的 SQLite 数据库
         sqlite3 ~/test.db <<EOF
         CREATE TABLE products (
           id INTEGER PRIMARY KEY,
@@ -150,16 +150,16 @@ The communication between the SQLite MCP server and your local SQLite database h
         ```
       </Step>
 
-      <Step title="Configure Claude Desktop">
-        Open your Claude Desktop App configuration at `~/Library/Application Support/Claude/claude_desktop_config.json` in a text editor.
+      <Step title="配置 Claude Desktop">
+        在文本编辑器中打开 `~/Library/Application Support/Claude/claude_desktop_config.json` 中的 Claude Desktop 应用配置。
 
-        For example, if you have [VS Code](https://code.visualstudio.com/) installed:
+        例如，如果你安装了 [VS Code](https://code.visualstudio.com/)：
 
         ```bash
         code ~/Library/Application\ Support/Claude/claude_desktop_config.json
         ```
 
-        Add this configuration (replace YOUR_USERNAME with your actual username):
+        添加以下配置（将 YOUR_USERNAME 替换为你的实际用户名）：
 
         ```json
         {
@@ -172,22 +172,22 @@ The communication between the SQLite MCP server and your local SQLite database h
         }
         ```
 
-        This tells Claude Desktop:
-        1. There's an MCP server named "sqlite"
-        2. Launch it by running `uvx mcp-server-sqlite`
-        3. Connect it to your test database
+        这告诉 Claude Desktop：
+        1. 有一个名为 "sqlite" 的 MCP 服务器
+        2. 通过运行 `uvx mcp-server-sqlite` 启动它
+        3. 将其连接到你的测试数据库
 
-        Save the file, and restart **Claude Desktop**.
+        保存文件，并重新启动 **Claude Desktop**。
       </Step>
     </Steps>
   </Tab>
   <Tab title="Windows">
     <Steps>
-      <Step title="Create a sample database">
-        Let's create a simple SQLite database for testing:
+      <Step title="创建示例数据库">
+        创建一个简单的 SQLite 数据库进行测试：
 
         ```powershell
-        # Create a new SQLite database
+        # 创建一个新的 SQLite 数据库
         $sql = @'
         CREATE TABLE products (
           id INTEGER PRIMARY KEY,
@@ -223,16 +223,16 @@ The communication between the SQLite MCP server and your local SQLite database h
         ```
       </Step>
 
-      <Step title="Configure Claude Desktop">
-        Open your Claude Desktop App configuration at `%APPDATA%\Claude\claude_desktop_config.json` in a text editor.
+      <Step title="配置 Claude Desktop">
+        在文本编辑器中打开 `%APPDATA%\Claude\claude_desktop_config.json` 中的 Claude Desktop 应用配置。
 
-        For example, if you have [VS Code](https://code.visualstudio.com/) installed:
+        例如，如果你安装了 [VS Code](https://code.visualstudio.com/)：
 
         ```powershell
         code $env:AppData\Claude\claude_desktop_config.json
         ```
 
-        Add this configuration (replace YOUR_USERNAME with your actual username):
+        添加以下配置（将 YOUR_USERNAME 替换为你的实际用户名）：
 
         ```json
         {
@@ -249,98 +249,98 @@ The communication between the SQLite MCP server and your local SQLite database h
         }
         ```
 
-        This tells Claude Desktop:
-        1. There's an MCP server named "sqlite"
-        2. Launch it by running `uvx mcp-server-sqlite`
-        3. Connect it to your test database
+        这告诉 Claude Desktop：
+        1. 有一个名为 "sqlite" 的 MCP 服务器
+        2. 通过运行 `uvx mcp-server-sqlite` 启动它
+        3. 将其连接到你的测试数据库
 
-        Save the file, and restart **Claude Desktop**.
+        保存文件，并重新启动 **Claude Desktop**。
       </Step>
     </Steps>
   </Tab>
 </Tabs>
 
-## Test it out
+## 测试
 
-Let's verify everything is working. Try sending this prompt to Claude Desktop:
+让我们验证一切正常。尝试向 Claude Desktop 发送以下提示：
 
 ```
-Can you connect to my SQLite database and tell me what products are available, and their prices?
+你能连接到我的 SQLite 数据库并告诉我有哪些产品及其价格吗？
 ```
 
-Claude Desktop will:
-1. Connect to the SQLite MCP server
-2. Query your local database
-3. Format and present the results
+Claude Desktop 将会：
+1. 连接到 SQLite MCP 服务器
+2. 查询你的本地数据库
+3. 格式化并展示结果
 
-<Frame caption="Claude Desktop successfully queries our SQLite database 🎉">
-  <img src="/images/quickstart-screenshot.png" alt="Example Claude Desktop conversation showing database query results" />
+<Frame caption="Claude Desktop 成功查询我们的 SQLite 数据库 🎉">
+  <img src="/images/quickstart-screenshot.png" alt="示例 Claude Desktop 对话展示数据库查询结果" />
 </Frame>
 
-## What's happening under the hood?
+## 背后发生了什么？
 
-When you interact with Claude Desktop using MCP:
+当你使用 MCP 与 Claude Desktop 交互时：
 
-1. **Server Discovery**: Claude Desktop connects to your configured MCP servers on startup
-2. **Protocol Handshake**: When you ask about data, Claude Desktop:
-   - Identifies which MCP server can help (sqlite in this case)
-   - Negotiates capabilities through the protocol
-   - Requests data or actions from the MCP server
+1. **服务器发现**：Claude Desktop 在启动时连接到你配置的 MCP 服务器
+2. **协议握手**：当你询问数据时，Claude Desktop：
+   - 确定哪个 MCP 服务器可以提供帮助（在本例中是 sqlite）
+   - 通过协议协商能力
+   - 从 MCP 服务器请求数据或操作
 
-3. **Interaction Flow**:
+3. **交互流程**：
    ```mermaid
    sequenceDiagram
        participant C as Claude Desktop
        participant M as MCP Server
        participant D as SQLite DB
 
-       C->>M: Initialize connection
-       M-->>C: Available capabilities
+       C->>M: 初始化连接
+       M-->>C: 可用的能力
 
-       C->>M: Query request
-       M->>D: SQL query
-       D-->>M: Results
-       M-->>C: Formatted results
+       C->>M: 查询请求
+       M->>D: SQL 查询
+       D-->>M: 结果
+       M-->>C: 格式化结果
    ```
 
-4. **Security**:
-   - MCP servers only expose specific, controlled capabilities
-   - MCP servers run locally on your machine, and the resources they access are not exposed to the internet
-   - Claude Desktop requires user confirmation for sensitive operations
+4. **安全性**：
+   - MCP 服务器仅暴露特定、受控的功能
+   - MCP 服务器在你的机器上本地运行，它们访问的资源不会暴露在互联网上
+   - Claude Desktop 需要用户确认以进行敏感操作
 
-## Try these examples
+## 尝试这些示例
 
-Now that MCP is working, try these increasingly powerful examples:
+现在 MCP 正常工作，尝试这些越来越强大的示例：
 
 <AccordionGroup>
-  <Accordion title="Basic Queries" active>
+  <Accordion title="基本查询" active>
     ```
-    What's the average price of all products in the database?
-    ```
-  </Accordion>
-  <Accordion title="Data Analysis">
-    ```
-    Can you analyze the price distribution and suggest any pricing optimizations?
+    数据库中所有产品的平均价格是多少？
     ```
   </Accordion>
-  <Accordion title="Complex Operations">
+  <Accordion title="数据分析">
     ```
-    Could you help me design and create a new table for storing customer orders?
+    你能分析价格分布并建议任何定价优化吗？
+    ```
+  </Accordion>
+  <Accordion title="复杂操作">
+    ```
+    你能帮我设计并创建一个新表来存储客户订单吗？
     ```
   </Accordion>
 </AccordionGroup>
 
-## Add more capabilities
+## 添加更多功能
 
-Want to give Claude Desktop more local integration capabilities? Add these servers to your configuration:
+想给 Claude Desktop 更多本地集成功能？将这些服务器添加到你的配置中：
 
 <Note>
-  Note that these MCP servers will require [Node.js](https://nodejs.org/en) to be installed on your machine.
+  请注意，这些 MCP 服务器需要在你的机器上安装 [Node.js](https://nodejs.org/en)。
 </Note>
 
 <AccordionGroup>
-  <Accordion title="File System Access" icon="folder-open">
-    Add this to your config to let Claude Desktop read and analyze files:
+  <Accordion title="文件系统访问" icon="folder-open">
+    添加此配置以让 Claude Desktop 读取和分析文件：
     ```json
     "filesystem": {
       "command": "npx",
@@ -349,8 +349,8 @@ Want to give Claude Desktop more local integration capabilities? Add these serve
     ```
   </Accordion>
 
-  <Accordion title="PostgreSQL Connection" icon="database">
-    Connect Claude Desktop to your PostgreSQL database:
+  <Accordion title="PostgreSQL 连接" icon="database">
+    将 Claude Desktop 连接到你的 PostgreSQL 数据库：
     ```json
     "postgres": {
       "command": "npx",
@@ -360,73 +360,73 @@ Want to give Claude Desktop more local integration capabilities? Add these serve
   </Accordion>
 </AccordionGroup>
 
-## More MCP Clients 
+## 更多 MCP 客户端
 
-While this guide demonstrates MCP using Claude Desktop as a client, several other applications support MCP integration:
+虽然本指南演示了使用 Claude Desktop 作为客户端的 MCP，但还有其他支持 MCP 集成的应用程序：
 
 <CardGroup cols={2}>
   <Card
     title="Zed Editor"
     icon="pen-to-square"
     href="https://zed.dev">
-    A high-performance, multiplayer code editor with built-in MCP support for AI-powered coding assistance
+    一个高性能的、多用户代码编辑器，内置 MCP 支持以实现 AI 驱动的代码辅助
   </Card>
 
   <Card
     title="Cody"
     icon="magnifying-glass"
     href="https://sourcegraph.com/cody">
-    Code intelligence platform featuring MCP integration for enhanced code search and analysis capabilities
+    代码智能平台，具有 MCP 集成功能，以增强代码搜索和分析能力
   </Card>
 </CardGroup>
 
-Each host application may implement MCP features differently or support different capabilities. Check their respective documentation for specific setup instructions and supported features.
+每个主机应用程序可能以不同的方式实现 MCP 功能或支持不同的功能。请查看它们各自的文档以获取特定的设置说明和支持的功能。
 
-## Troubleshooting
+## 故障排除
 
 <AccordionGroup>
-  <Accordion title="Nothing showing up in Claude Desktop?">
-    1. Check if MCP is enabled:
-       - Click the 🔌 icon in Claude Desktop, next to the chat box
-       - Expand "Installed MCP Servers"
-       - You should see your configured servers
+  <Accordion title="Claude Desktop 中没有显示任何内容？">
+    1. 检查 MCP 是否已启用：
+       - 点击 Claude Desktop 中的 🔌 图标，位于聊天框旁边
+       - 展开“已安装的 MCP 服务器”
+       - 你应该能看到你配置的服务器
 
-    2. Verify your config:
-       - From Claude Desktop, go to Claude > Settings…
-       - Open the "Developer" tab to see your configuration
+    2. 验证你的配置：
+       - 在 Claude Desktop 中，进入 Claude > 设置…
+       - 打开“开发者”选项卡查看你的配置
 
-    3. Restart Claude Desktop completely:
-       - Quit the app (not just close the window)
-       - Start it again
+    3. 完全重启 Claude Desktop：
+       - 退出应用程序（不仅仅是关闭窗口）
+       - 再次启动
   </Accordion>
 
-  <Accordion title="MCP or database errors?">
-    1. Check Claude Desktop's logs:
+  <Accordion title="MCP 或数据库错误？">
+    1. 检查 Claude Desktop 的日志：
        ```bash
        tail -n 20 -f ~/Library/Logs/Claude/mcp*.log
        ```
 
-    2. Verify database access:
+    2. 验证数据库访问：
        ```bash
-       # Test database connection
+       # 测试数据库连接
        sqlite3 ~/test.db ".tables"
        ```
 
-    3. Common fixes:
-       - Check file paths in your config
-       - Verify database file permissions
-       - Ensure SQLite is installed properly
+    3. 常见修复：
+       - 检查配置中的文件路径
+       - 验证数据库文件权限
+       - 确保 SQLite 安装正确
   </Accordion>
 </AccordionGroup>
 
-## Next steps
+## 下一步
 
 <CardGroup cols={2}>
-  <Card title="Build your first MCP server" icon="code" href="/docs/first-server/python">
-    Create your own MCP servers to give your LLM clients new capabilities.
+  <Card title="构建你的第一个 MCP 服务器" icon="code" href="/docs/first-server/python">
+    创建你自己的 MCP 服务器，为你的 LLM 客户端提供新功能。
   </Card>
 
-  <Card title="Explore examples" icon="github" href="https://github.com/modelcontextprotocol/servers">
-    Browse our collection of example servers to see what's possible.
+  <Card title="探索示例" icon="github" href="https://github.com/modelcontextprotocol/servers">
+    浏览我们的示例服务器集合，看看有什么可能。
   </Card>
 </CardGroup>

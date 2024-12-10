@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Model Context Protocol",
+  "name": "MCP 中文文档",
   "logo": {
     "dark": "/logo/dark.svg",
     "light": "/logo/light.svg"
@@ -32,7 +32,7 @@
       "url": "https://github.com/modelcontextprotocol/typescript-sdk"
     },
     {
-      "name": "Specification",
+      "name": "规范",
       "icon": "book",
       "url": "https://spec.modelcontextprotocol.io"
     }
@@ -40,18 +40,28 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "quickstart", "clients"]
+      "pages": [
+        "introduction",
+        "quickstart",
+        "clients"
+      ]
     },
     {
       "group": "Your First MCP Server",
-      "pages": ["docs/first-server/python", "docs/first-server/typescript"]
+      "pages": [
+        "docs/first-server/python",
+        "docs/first-server/typescript"
+      ]
     },
     {
-      "group": "Development Tools",
-      "pages": ["docs/tools/debugging", "docs/tools/inspector"]
+      "group": "开发工具",
+      "pages": [
+        "docs/tools/debugging",
+        "docs/tools/inspector"
+      ]
     },
     {
-      "group": "Concepts",
+      "group": "概念",
       "pages": [
         "docs/concepts/architecture",
         "docs/concepts/resources",
