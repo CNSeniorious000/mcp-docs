@@ -1,65 +1,65 @@
 ---
 title: "Roots"
-description: "Understanding roots in MCP"
+description: "了解 MCP 中的 roots"
 ---
 
-Roots are a concept in MCP that define the boundaries where servers can operate. They provide a way for clients to inform servers about relevant resources and their locations.
+Roots 是 MCP 中的一个概念，它定义了 servers 可以操作的边界。它们为 clients 提供了一种方式，可以告知 servers 有关相关 resources 及其位置的信息。
 
-## What are Roots?
+## 什么是 Roots？
 
-A root is a URI that a client suggests a server should focus on. When a client connects to a server, it declares which roots the server should work with. While primarily used for filesystem paths, roots can be any valid URI including HTTP URLs.
+一个 root 是一个 URI，client 建议 server 应该关注它。当 client 连接到 server 时，它声明 server 应该使用哪些 roots。虽然主要用于文件系统路径，但 roots 可以是任何有效的 URI，包括 HTTP URL。
 
-For example, roots could be:
+例如，roots 可以是：
 
 ```
 file:///home/user/projects/myapp
 https://api.example.com/v1
 ```
 
-## Why Use Roots?
+## 为什么要使用 Roots？
 
-Roots serve several important purposes:
+Roots 有几个重要的用途：
 
-1. **Guidance**: They inform servers about relevant resources and locations
-2. **Clarity**: Roots make it clear which resources are part of your workspace
-3. **Organization**: Multiple roots let you work with different resources simultaneously
+1. **指导**: 它们告知 servers 有关相关 resources 和位置的信息
+2. **清晰**: Roots 明确了哪些 resources 是你的 workspace 的一部分
+3. **组织**: 多个 roots 允许你同时使用不同的 resources
 
-## How Roots Work
+## Roots 如何工作
 
-When a client supports roots, it:
+当 client 支持 roots 时，它：
 
-1. Declares the `roots` capability during connection
-2. Provides a list of suggested roots to the server
-3. Notifies the server when roots change (if supported)
+1. 在连接期间声明 `roots` capability
+2. 向 server 提供建议的 roots 列表
+3. 在 roots 更改时通知 server (如果支持)
 
-While roots are informational and not strictly enforcing, servers should:
+虽然 roots 是信息性的，并且不严格执行，但 servers 应该：
 
-1. Respect the provided roots
-2. Use root URIs to locate and access resources
-3. Prioritize operations within root boundaries
+1. 尊重提供的 roots
+2. 使用 root URIs 来定位和访问 resources
+3. 优先考虑 root 边界内的操作
 
-## Common Use Cases
+## 常见用例
 
-Roots are commonly used to define:
+Roots 经常用于定义：
 
-- Project directories
-- Repository locations
+- 项目目录
+- 仓库位置
 - API endpoints
-- Configuration locations
-- Resource boundaries
+- 配置位置
+- Resource 边界
 
-## Best Practices
+## 最佳实践
 
-When working with roots:
+在使用 roots 时：
 
-1. Only suggest necessary resources
-2. Use clear, descriptive names for roots
-3. Monitor root accessibility
-4. Handle root changes gracefully
+1. 仅建议必要的 resources
+2. 为 roots 使用清晰、描述性的名称
+3. 监控 root 的可访问性
+4. 优雅地处理 root 更改
 
-## Example
+## 示例
 
-Here's how a typical MCP client might expose roots:
+以下是一个典型的 MCP client 可能如何暴露 roots 的示例：
 
 ```json
 {
@@ -76,4 +76,4 @@ Here's how a typical MCP client might expose roots:
 }
 ```
 
-This configuration suggests the server focus on both a local repository and an API endpoint while keeping them logically separated.
+此配置建议 server 关注本地 repository 和 API endpoint，同时保持它们在逻辑上分离。

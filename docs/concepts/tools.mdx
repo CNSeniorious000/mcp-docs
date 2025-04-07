@@ -1,42 +1,42 @@
 ---
 title: "Tools"
-description: "Enable LLMs to perform actions through your server"
+description: "让 LLMs 通过你的 server 执行操作"
 ---
 
-Tools are a powerful primitive in the Model Context Protocol (MCP) that enable servers to expose executable functionality to clients. Through tools, LLMs can interact with external systems, perform computations, and take actions in the real world.
+Tools 是 Model Context Protocol (MCP) 中的一个强大原语，它使 servers 能够向 clients 暴露可执行功能。通过 tools，LLMs 可以与外部系统交互、执行计算并在现实世界中采取行动。
 
 <Note>
-  Tools are designed to be **model-controlled**, meaning that tools are exposed from servers to clients with the intention of the AI model being able to automatically invoke them (with a human in the loop to grant approval).
+  Tools 被设计为**模型控制**，这意味着 tools 从 servers 暴露给 clients，目的是 AI 模型能够自动调用它们（需要人工介入以授予批准）。
 </Note>
 
-## Overview
+## 概述
 
-Tools in MCP allow servers to expose executable functions that can be invoked by clients and used by LLMs to perform actions. Key aspects of tools include:
+MCP 中的 Tools 允许 servers 暴露可执行函数，这些函数可以被 clients 调用，并被 LLMs 用于执行操作。Tools 的关键方面包括：
 
-- **Discovery**: Clients can list available tools through the `tools/list` endpoint
-- **Invocation**: Tools are called using the `tools/call` endpoint, where servers perform the requested operation and return results
-- **Flexibility**: Tools can range from simple calculations to complex API interactions
+- **Discovery (发现)**：Clients 可以通过 `tools/list` endpoint 列出可用的 tools
+- **Invocation (调用)**：Tools 使用 `tools/call` endpoint 调用，其中 servers 执行请求的操作并返回结果
+- **Flexibility (灵活性)**：Tools 的范围可以从简单的计算到复杂的 API 交互
 
-Like [resources](/docs/concepts/resources), tools are identified by unique names and can include descriptions to guide their usage. However, unlike resources, tools represent dynamic operations that can modify state or interact with external systems.
+与 [resources](/docs/concepts/resources) 一样，tools 通过唯一的名称进行标识，并且可以包含描述以指导其使用。但是，与 resources 不同的是，tools 代表可以修改状态或与外部系统交互的动态操作。
 
-## Tool definition structure
+## Tool 定义结构
 
-Each tool is defined with the following structure:
+每个 tool 都使用以下结构定义：
 
 ```typescript
 {
-  name: string;          // Unique identifier for the tool
-  description?: string;  // Human-readable description
-  inputSchema: {         // JSON Schema for the tool's parameters
+  name: string;          // Tool 的唯一标识符
+  description?: string;  // 供人阅读的描述
+  inputSchema: {         // Tool 参数的 JSON Schema
     type: "object",
-    properties: { ... }  // Tool-specific parameters
+    properties: { ... }  // Tool 特定的参数
   }
 }
 ```
 
-## Implementing tools
+## 实现 tools
 
-Here's an example of implementing a basic tool in an MCP server:
+以下是在 MCP server 中实现一个基本 tool 的示例：
 
 <Tabs>
   <Tab title="TypeScript">
@@ -50,12 +50,12 @@ Here's an example of implementing a basic tool in an MCP server:
       }
     });
 
-    // Define available tools
+    // 定义可用的 tools
     server.setRequestHandler(ListToolsRequestSchema, async () => {
       return {
         tools: [{
           name: "calculate_sum",
-          description: "Add two numbers together",
+          description: "将两个数字加在一起",
           inputSchema: {
             type: "object",
             properties: {
@@ -68,7 +68,7 @@ Here's an example of implementing a basic tool in an MCP server:
       };
     });
 
-    // Handle tool execution
+    // 处理 tool 执行
     server.setRequestHandler(CallToolRequestSchema, async (request) => {
       if (request.params.name === "calculate_sum") {
         const { a, b } = request.params.arguments;
@@ -94,7 +94,7 @@ Here's an example of implementing a basic tool in an MCP server:
         return [
             types.Tool(
                 name="calculate_sum",
-                description="Add two numbers together",
+                description="将两个数字加在一起",
                 inputSchema={
                     "type": "object",
                     "properties": {
@@ -121,18 +121,18 @@ Here's an example of implementing a basic tool in an MCP server:
   </Tab>
 </Tabs>
 
-## Example tool patterns
+## 示例 tool 模式
 
-Here are some examples of types of tools that a server could provide:
+以下是 server 可以提供的 tool 类型的示例：
 
-### System operations
+### 系统操作
 
-Tools that interact with the local system:
+与本地系统交互的 tools：
 
 ```typescript
 {
   name: "execute_command",
-  description: "Run a shell command",
+  description: "运行 shell 命令",
   inputSchema: {
     type: "object",
     properties: {
@@ -143,14 +143,14 @@ Tools that interact with the local system:
 }
 ```
 
-### API integrations
+### API 集成
 
-Tools that wrap external APIs:
+封装外部 APIs 的 tools：
 
 ```typescript
 {
   name: "github_create_issue",
-  description: "Create a GitHub issue",
+  description: "创建 GitHub issue",
   inputSchema: {
     type: "object",
     properties: {
@@ -162,14 +162,14 @@ Tools that wrap external APIs:
 }
 ```
 
-### Data processing
+### 数据处理
 
-Tools that transform or analyze data:
+转换或分析数据的 tools：
 
 ```typescript
 {
   name: "analyze_csv",
-  description: "Analyze a CSV file",
+  description: "分析 CSV 文件",
   inputSchema: {
     type: "object",
     properties: {
@@ -185,66 +185,66 @@ Tools that transform or analyze data:
 }
 ```
 
-## Best practices
+## 最佳实践
 
-When implementing tools:
+在实现 tools 时：
 
-1. Provide clear, descriptive names and descriptions
-2. Use detailed JSON Schema definitions for parameters
-3. Include examples in tool descriptions to demonstrate how the model should use them
-4. Implement proper error handling and validation
-5. Use progress reporting for long operations
-6. Keep tool operations focused and atomic
-7. Document expected return value structures
-8. Implement proper timeouts
-9. Consider rate limiting for resource-intensive operations
-10. Log tool usage for debugging and monitoring
+1. 提供清晰、描述性的名称和描述
+2. 为参数使用详细的 JSON Schema 定义
+3. 在 tool 描述中包含示例，以演示模型应如何使用它们
+4. 实现适当的错误处理和验证
+5. 对长时间运行的操作使用进度报告
+6. 保持 tool 操作的 focus 和原子性
+7. 记录预期的返回值结构
+8. 实现适当的超时
+9. 考虑对资源密集型操作进行速率限制
+10. 记录 tool 使用情况以进行调试和监控
 
-## Security considerations
+## 安全考虑
 
-When exposing tools:
+在暴露 tools 时：
 
-### Input validation
+### 输入验证
 
-- Validate all parameters against the schema
-- Sanitize file paths and system commands
-- Validate URLs and external identifiers
-- Check parameter sizes and ranges
-- Prevent command injection
+- 根据 schema 验证所有参数
+- 清理文件路径和系统命令
+- 验证 URL 和外部标识符
+- 检查参数大小和范围
+- 阻止命令注入
 
-### Access control
+### 访问控制
 
-- Implement authentication where needed
-- Use appropriate authorization checks
-- Audit tool usage
-- Rate limit requests
-- Monitor for abuse
+- 在需要时实现身份验证
+- 使用适当的授权检查
+- 审计 tool 使用情况
+- 限制请求速率
+- 监控滥用情况
 
-### Error handling
+### 错误处理
 
-- Don't expose internal errors to clients
-- Log security-relevant errors
-- Handle timeouts appropriately
-- Clean up resources after errors
-- Validate return values
+- 不要向 clients 暴露内部错误
+- 记录与安全相关的错误
+- 适当地处理超时
+- 在出错后清理资源
+- 验证返回值
 
-## Tool discovery and updates
+## Tool 发现和更新
 
-MCP supports dynamic tool discovery:
+MCP 支持动态 tool 发现：
 
-1. Clients can list available tools at any time
-2. Servers can notify clients when tools change using `notifications/tools/list_changed`
-3. Tools can be added or removed during runtime
-4. Tool definitions can be updated (though this should be done carefully)
+1. Clients 可以在任何时候列出可用的 tools
+2. Servers 可以在 tools 更改时使用 `notifications/tools/list_changed` 通知 clients
+3. 可以在运行时添加或删除 tools
+4. 可以更新 tool 定义（尽管应该谨慎进行）
 
-## Error handling
+## 错误处理
 
-Tool errors should be reported within the result object, not as MCP protocol-level errors. This allows the LLM to see and potentially handle the error. When a tool encounters an error:
+Tool 错误应在 result 对象中报告，而不是作为 MCP 协议级别的错误。这允许 LLM 看到并可能处理错误。当 tool 遇到错误时：
 
-1. Set `isError` to `true` in the result
-2. Include error details in the `content` array
+1. 在 result 中将 `isError` 设置为 `true`
+2. 在 `content` 数组中包含错误详细信息
 
-Here's an example of proper error handling for tools:
+以下是 tools 的正确错误处理示例：
 
 <Tabs>
   <Tab title="TypeScript">
@@ -300,14 +300,14 @@ Here's an example of proper error handling for tools:
   </Tab>
 </Tabs>
 
-This approach allows the LLM to see that an error occurred and potentially take corrective action or request human intervention.
+这种方法允许 LLM 看到发生了错误，并可能采取纠正措施或请求人工干预。
 
-## Testing tools
+## 测试 tools
 
-A comprehensive testing strategy for MCP tools should cover:
+MCP tools 的综合测试策略应涵盖：
 
-- **Functional testing**: Verify tools execute correctly with valid inputs and handle invalid inputs appropriately
-- **Integration testing**: Test tool interaction with external systems using both real and mocked dependencies
-- **Security testing**: Validate authentication, authorization, input sanitization, and rate limiting
-- **Performance testing**: Check behavior under load, timeout handling, and resource cleanup
-- **Error handling**: Ensure tools properly report errors through the MCP protocol and clean up resources
+- **功能测试**：验证 tools 是否使用有效输入正确执行，并适当地处理无效输入
+- **集成测试**：使用真实和模拟的依赖项测试 tool 与外部系统的交互
+- **安全测试**：验证身份验证、授权、输入清理和速率限制
+- **性能测试**：检查负载下的行为、超时处理和资源清理
+- **错误处理**：确保 tools 通过 MCP 协议正确报告错误并清理资源
