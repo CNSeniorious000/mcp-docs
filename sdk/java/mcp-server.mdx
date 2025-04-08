@@ -427,7 +427,8 @@ var calculatorTool = new McpServerFeatures.SyncToolSpecification(
         
         // 创建采样请求
         McpSchema.CreateMessageRequest request = McpSchema.CreateMessageRequest.builder()
-            .content(new McpSchema.TextContent("Calculate: " + arguments.get("expression")))
+            .messages(List.of(new McpSchema.SamplingMessage(McpSchema.Role.USER,
+                new McpSchema.TextContent("Calculate: " + arguments.get("expression")))
             .modelPreferences(McpSchema.ModelPreferences.builder()
                 .hints(List.of(
                     McpSchema.ModelHint.of("claude-3-sonnet"),

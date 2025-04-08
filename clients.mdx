@@ -10,7 +10,7 @@ description: "支持 MCP 集成的应用列表"
 | 客户端                                      | [Resources] | [Prompts] | [Tools] | [Sampling] | Roots | 备注                                                                        |
 |---------------------------------------------|-------------|-----------|---------|------------|-------|-----------------------------------------------------------------------------|
 | [Claude Desktop App][Claude]                | ✅          | ✅        | ✅      | ❌         | ❌    | 完全支持所有 MCP 功能                                           |
-| [Claude Code][Claude Code]                  | ❌          | ✅        | ✅      | ❌         | ❌    | 支持 prompts 和 tools                                                  |
+| [Claude Code][Claude Code]                  | ❌          | ✅        | ✅      | ❌         | ✅    | 支持 prompts、tools 和 roots                                           |
 | [5ire][5ire]                                | ❌          | ❌        | ✅      | ❌         | ❌    | 支持 tools.                                                             |
 | [BeeAI Framework][BeeAI Framework]          | ❌          | ❌        | ✅      | ❌         | ❌    | 在 agentic 工作流中支持 tools.                                        |
 | [Cline][Cline]                              | ✅          | ❌        | ✅      | ❌         | ❌    | 支持 tools 和 resources.                                               |
@@ -30,6 +30,7 @@ description: "支持 MCP 集成的应用列表"
 | [Sourcegraph Cody][Cody]                    | ✅          | ❌        | ❌      | ❌         | ❌    | 通过 OpenCTX 支持 resources                                          |
 | [Superinterface][Superinterface]            | ❌          | ❌        | ✅      | ❌         | ❌    | 支持 tools                                                              |
 | [TheiaAI/TheiaIDE][TheiaAI/TheiaIDE]        | ❌          | ❌        | ✅      | ❌         | ❌    | 在 Theia AI 和 AI 驱动的 Theia IDE 中支持 Agents 的 tools          |
+| [VS Code GitHub Copilot][VS Code]           | ❌          | ❌        | ✅      | ❌         | ❌    | 支持 tools、roots、动态发现、安全密钥配置和一键安装                     |
 | [Windsurf Editor][Windsurf]                 | ❌          | ❌        | ✅      | ❌         | ❌    | 支持 AI Flow 的 tools，用于协作开发。                  |
 | [Witsy][Witsy]                              | ❌          | ❌        | ✅      | ❌         | ❌    | 在 Witsy 中支持 tools.                                                    |
 | [Zed][Zed]                                  | ❌          | ✅        | ❌      | ❌         | ❌    | 提示以 / 命令的形式出现                                            |
@@ -72,6 +73,7 @@ description: "支持 MCP 集成的应用列表"
 [Tools]: https://modelcontextprotocol.io/docs/concepts/tools
 [Sampling]: https://modelcontextprotocol.io/docs/concepts/sampling
 [Microsoft Copilot Studio]: https://learn.microsoft.com/en-us/microsoft-copilot-studio/agent-extend-action-mcp
+[VS Code]: https://code.visualstudio.com/
 
 ## 客户端详情
 
@@ -259,6 +261,16 @@ Theia AI 和 Theia IDE 的 MCP 集成为用户提供了灵活性，使它们成�
 **了解更多：**
 - [Theia IDE 和 Theia AI MCP 公告](https://eclipsesource.com/blogs/2024/12/19/theia-ide-and-theia-ai-support-mcp/)
 - [下载 AI 驱动的 Theia IDE](https://theia-ide.org/)
+
+### VS Code GitHub Copilot
+[VS Code](https://code.visualstudio.com/) 通过 [agent mode](https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode) 将 MCP 与 GitHub Copilot 集成，允许在 agentic 编码工作流中直接与 MCP 提供的工具交互。在 Claude Desktop、工作区或用户设置中配置服务器，提供引导式 MCP 安装，并通过输入变量安全处理密钥以避免泄露硬编码密钥。
+
+**主要特性：**
+- 支持 stdio 和 server-sent events (SSE) 传输
+- 每个会话可选择工具以优化代理会话性能
+- 使用重启命令和输出日志轻松调试服务器
+- 可编辑输入的工具调用和始终允许切换
+- 与现有 VS Code 扩展系统集成，从扩展中注册 MCP 服务器
 
 ### Windsurf Editor
 [Windsurf Editor](https://codeium.com/windsurf) 是一个结合 AI 辅助和开发者工作流的 agentic IDE。它具有创新的 AI Flow 系统，支持协作和独立的 AI 交互，同时保持开发者控制。
